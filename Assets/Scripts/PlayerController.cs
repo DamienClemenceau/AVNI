@@ -1,0 +1,74 @@
+﻿using UnityEngine;
+
+[System.Serializable] 
+public class Boundary
+{
+    public float xMax, xMin, yMax, yMin;
+}
+
+[System.Serializable]
+public class Speed
+{
+    public float lateral, foward;
+}
+
+[RequireComponent(typeof(Rigidbody))]
+public class PlayerController : MonoBehaviour
+{
+    
+    public float tilt;
+    public Speed speed;
+    public Boundary boundary;
+
+    public GameObject shot;
+    public Transform shotSpawn;
+    public float fireRate;
+
+    private Rigidbody rb;
+    private Transform _transform;
+    private GameManager gameManager;
+    private float currentVelocity;
+    private float nextFire;
+
+    public int life;
+
+    void Start()
+    {
+        GameObject gameManagerObject = GameObject.FindWithTag("GameManager");
+        if (gameManagerObject != null)
+        {
+            gameManager = gameManagerObject.GetComponent<GameManager>();
+        }
+        rb = GetComponent<Rigidbody>();
+        _transform = GetComponent<Transform>();
+    }
+
+    void Update()
+    {
+        if(Input.GetButton("Fire1") && Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            GameObject projectile = Instantiate(shot, shotSpawn.position, Quaternion.identity, _transform);
+            projectile.GetComponent<SimpleProjectile>().creator = gameObject;
+        }
+
+        if(life <= 0)
+        {
+            gameManager.GameOver();
+        }
+    }
+
+	void FixedUpdate()
+    {
+        float targetXMovement = Input.GetAxis("Horizontal") * speed.lateral;
+        float xMovement = Mathf.SmoothDamp(rb.velocity.x, targetXMovement, ref currentVelocity, 0.1f);
+        rb.velocity = new Vector3(xMovement, Mathf.Sin(Time.time) * Time.deltaTime, speed.foward);
+        rb.position = new Vector3
+        (
+            Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),
+            Mathf.Clamp(rb.position.y, boundary.yMin, boundary.yMax),
+            rb.position.z
+        );
+        rb.rotation = Quaternion.Euler(0f, 0f, rb.velocity.x * -tilt);
+	}
+}

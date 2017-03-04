@@ -16,7 +16,9 @@ public class SimpleProjectile : MonoBehaviour
             gameManager = gameManagerObject.GetComponent<GameManager>();
         }
         if (creator == null)
+        {
             creator = new GameObject();
+        }
 	}
 
     void Update()

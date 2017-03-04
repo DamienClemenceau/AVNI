@@ -14,11 +14,14 @@ public class CameraFollow : MonoBehaviour {
 	
 	void LateUpdate ()
     {
-        _transform.position = new Vector3
-        (
-            _transform.position.x,
-            _transform.position.y,
-            follow.position.z + offset
-        );
+        if(follow != null)
+        {
+            _transform.position = new Vector3
+            (
+                _transform.position.x,
+                _transform.position.y,
+                follow.position.z + offset
+            );
+        }
 	}
 }

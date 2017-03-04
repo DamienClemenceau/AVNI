@@ -72,6 +72,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        gameManager.GameOver();
+    }
+
 	void FixedUpdate()
     {
         if(pointer.position.x - deadZone > _transform.position.x)

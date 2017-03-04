@@ -15,14 +15,15 @@ public class Speed
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    
     public float tilt;
     public Speed speed;
     public Boundary boundary;
 
+    public LayerMask mask;
     public GameObject shot;
     public Transform shotSpawn;
     public float fireRate;
+    public float weaponRange;
 
     private Rigidbody rb;
     private Transform _transform;
@@ -48,8 +49,18 @@ public class PlayerController : MonoBehaviour
         if(Input.GetButton("Fire1") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            GameObject projectile = Instantiate(shot, shotSpawn.position, Quaternion.identity, _transform);
-            projectile.GetComponent<SimpleProjectile>().creator = gameObject;
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, weaponRange, mask))
+            {
+                GameObject projectile = Instantiate(shot, shotSpawn.position, Quaternion.identity, _transform);
+                projectile.transform.LookAt(hit.point);
+                projectile.GetComponent<SimpleProjectile>().creator = gameObject;
+
+                Debug.DrawRay(ray.origin, hit.point, Color.blue, 1.0f);
+            }
+
         }
 
         if(life <= 0)

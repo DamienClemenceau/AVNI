@@ -15,10 +15,14 @@ public class SimpleProjectile : MonoBehaviour
         {
             gameManager = gameManagerObject.GetComponent<GameManager>();
         }
-        GetComponent<Rigidbody>().velocity = Vector3.forward * speed;
         if (creator == null)
             creator = new GameObject();
 	}
+
+    void Update()
+    {
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+    }
 
     void OnTriggerEnter(Collider other)
     {

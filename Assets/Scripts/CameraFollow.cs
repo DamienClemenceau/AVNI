@@ -5,15 +5,20 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour {
     public Transform follow;
     private Transform _transform;
-    private Vector3 offset;
+    private float offset;
 	void Start ()
     {
         _transform = GetComponent<Transform>();
-        offset = _transform.position - follow.position;
+        offset = _transform.position.z - follow.position.z;
 	}
 	
 	void LateUpdate ()
     {
-        _transform.position = follow.position + offset;
+        _transform.position = new Vector3
+        (
+            _transform.position.x,
+            _transform.position.y,
+            follow.position.z + offset
+        );
 	}
 }

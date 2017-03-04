@@ -18,16 +18,19 @@ public class PlayerController : MonoBehaviour
     public float tilt;
     public Speed speed;
     public Boundary boundary;
+    public float deadZone;
 
     public LayerMask mask;
-    public GameObject shot;
+    public Transform pointer;
     public Transform shotSpawn;
+    public GameObject shot;
     public float fireRate;
     public float weaponRange;
 
     private Rigidbody rb;
     private Transform _transform;
     private GameManager gameManager;
+    private float direction;
     private float currentVelocity;
     private float nextFire;
 
@@ -71,7 +74,19 @@ public class PlayerController : MonoBehaviour
 
 	void FixedUpdate()
     {
-        float targetXMovement = Input.GetAxis("Horizontal") * speed.lateral;
+        if(pointer.position.x - deadZone > _transform.position.x)
+        {
+            direction = 1;
+        }
+        else if (pointer.position.x + deadZone < _transform.position.x)
+        {
+            direction = -1;
+        } else
+        {
+            direction = 0;
+        }
+
+        float targetXMovement = direction * speed.lateral;
         float xMovement = Mathf.SmoothDamp(rb.velocity.x, targetXMovement, ref currentVelocity, 0.1f);
         rb.velocity = new Vector3(xMovement, Mathf.Sin(Time.time) * Time.deltaTime, speed.foward);
         rb.position = new Vector3

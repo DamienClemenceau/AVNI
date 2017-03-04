@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pointer : MonoBehaviour {
-    public int depth;
+    public float depth;
     public Boundary boundary;
 
 	void Start ()

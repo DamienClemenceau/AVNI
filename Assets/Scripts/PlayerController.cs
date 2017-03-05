@@ -13,7 +13,7 @@ public class Speed
 }
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : Entity
 {
     public float tilt;
     public Speed speed;
@@ -27,15 +27,17 @@ public class PlayerController : MonoBehaviour
     public float fireRate;
     public float weaponRange;
 
+    public int maxMana = 10;
+    public int manaShieldConsuption = 5;
+    private int mana;
+    private bool shielded;
+
     private Rigidbody rb;
     private Transform _transform;
     private GameManager gameManager;
     private float direction;
     private float currentVelocity;
     private float nextFire;
-
-    public int life;
-
     void Start()
     {
         GameObject gameManagerObject = GameObject.FindWithTag("GameManager");
@@ -45,11 +47,22 @@ public class PlayerController : MonoBehaviour
         }
         rb = GetComponent<Rigidbody>();
         _transform = GetComponent<Transform>();
+        mana = maxMana;
     }
 
     void Update()
     {
-        if(Input.GetButton("Fire1") && Time.time > nextFire)
+        if (Input.GetButton("Fire2") && mana >= manaShieldConsuption)
+        {
+            if(!shielded)
+                mana -= manaShieldConsuption;
+            shielded = true;
+        }
+        else if(!Input.GetButton("Fire2") && shielded)
+        {
+            shielded = false;
+        }
+        else if(Input.GetButton("Fire1") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
 
@@ -63,7 +76,6 @@ public class PlayerController : MonoBehaviour
 
                 Debug.DrawRay(ray.origin, hit.point, Color.blue, 1.0f);
             }
-
         }
 
         if(life <= 0)
@@ -72,9 +84,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnDestroy()
+    public override void TakeDamage()
     {
-        gameManager.GameOver();
+        if(!shielded)
+        { 
+            life--;
+            if (life <= 0)
+            {
+                gameManager.GameOver();
+                Destroy(gameObject);
+            }
+        }
     }
 
 	void FixedUpdate()
@@ -102,4 +122,9 @@ public class PlayerController : MonoBehaviour
         );
         rb.rotation = Quaternion.Euler(0f, 0f, rb.velocity.x * -tilt);
 	}
+
+    public void AddMana(int mana)
+    {
+        this.mana += mana;
+    }
 }

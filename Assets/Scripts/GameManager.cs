@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 
     public GameObject gameOverUI;
     public ScoreUI scoreUI;
+    public PlayerController player;
 
     void Update()
     {
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour {
     public void AddScore(int score)
     {
         this.score += score;
+        player.AddMana(score);
     }
 
     public void GameOver()

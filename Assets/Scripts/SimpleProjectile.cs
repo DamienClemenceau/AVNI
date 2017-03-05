@@ -31,8 +31,8 @@ public class SimpleProjectile : MonoBehaviour
         if(other.tag != "Boundary" && creator != other.gameObject) { 
             if (targetMask == (targetMask | 1<<other.gameObject.layer))
             {
-                Destroy(other.gameObject);
-                gameManager.AddScore(1);
+                Entity entity = other.GetComponent<Entity>();
+                entity.TakeDamage();
             }
             Destroy(gameObject);
         }

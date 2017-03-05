@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleStationnaryEnnemy : MonoBehaviour {
+public class SimpleStationnaryEnnemy : Entity {
     public GameObject player;
     public Transform shotSpawn;
     public GameObject shot;

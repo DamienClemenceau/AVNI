@@ -38,6 +38,7 @@ public class PlayerController : Entity
     private float direction;
     private float currentVelocity;
     private float nextFire;
+
     void Start()
     {
         GameObject gameManagerObject = GameObject.FindWithTag("GameManager");

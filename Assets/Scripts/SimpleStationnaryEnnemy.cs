@@ -19,7 +19,12 @@ public class SimpleStationnaryEnnemy : Entity {
                 nextFire = Time.time + fireRate;
 
                 GameObject projectile = Instantiate(shot, shotSpawn.position, Quaternion.identity, transform);
-                projectile.transform.LookAt(player.transform.position);
+
+                float distance = Vector3.Distance(transform.position, player.transform.position);
+                float travelTime = distance / projectile.GetComponent<SimpleProjectile>().speed;
+                Vector3 aimPoint = player.transform.position + player.GetComponent<Rigidbody>().velocity * travelTime;
+
+                projectile.transform.LookAt(aimPoint);
                 projectile.GetComponent<SimpleProjectile>().creator = gameObject;
             }
         }

@@ -6,22 +6,16 @@ public class SimpleProjectile : MonoBehaviour
     public float speed;
     public LayerMask targetMask;
     public GameObject creator;
-    private GameManager gameManager;
 
 	void Start ()
     {
-        GameObject gameManagerObject = GameObject.FindWithTag("GameManager");
-        if(gameManagerObject != null)
-        {
-            gameManager = gameManagerObject.GetComponent<GameManager>();
-        }
         if (creator == null)
         {
             creator = new GameObject();
         }
 	}
 
-    void Update()
+    void FixedUpdate()
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }

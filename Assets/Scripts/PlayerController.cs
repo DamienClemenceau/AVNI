@@ -35,9 +35,11 @@ public class PlayerController : Entity
     private Rigidbody rb;
     private Transform _transform;
     private GameManager gameManager;
-    private float direction;
     private float currentVelocity;
     private float nextFire;
+
+    [HideInInspector]
+    public float direction;
 
     void Start()
     {

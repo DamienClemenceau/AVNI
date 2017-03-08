@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
-    public Transform follow;
+    public GameObject follow;
     private Transform _transform;
     private float offset;
+    private PlayerController playerController;
 	void Start ()
     {
         _transform = GetComponent<Transform>();
-        offset = _transform.position.z - follow.position.z;
+        if (follow != null)
+        {
+            offset = _transform.position.z - follow.transform.position.z;
+            playerController = follow.GetComponent<PlayerController>();
+        }
 	}
 	
 	void LateUpdate ()
@@ -20,7 +25,7 @@ public class CameraFollow : MonoBehaviour {
             (
                 _transform.position.x,
                 _transform.position.y,
-                follow.position.z + offset
+                follow.transform.position.z + offset
             );
         }
 	}

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class ScoreUI : MonoBehaviour {
     public GUIText scoreUI;
+    private float progress;
+    private Vector3 startPosition;
 
     void Start()
     {
-        transform.position = Vector3.left * 3;
+        startPosition = transform.position = Vector3.left * 3;
     }
 
     public void UpdateScore(int score)
@@ -17,6 +19,15 @@ public class ScoreUI : MonoBehaviour {
 
     public void Appear()
     {
-        transform.position = Vector3.zero;
+        transform.position = new Vector3(
+            Mathf.Lerp(startPosition.x, 0, progress),
+            transform.position.y,
+            transform.position.z
+        );
+
+        if(progress <= 1)
+        {
+            progress += 0.08f;
+        }
     }
 }

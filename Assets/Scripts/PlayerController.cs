@@ -32,6 +32,9 @@ public class PlayerController : Entity
     private int mana;
     private bool shielded;
 
+    [HideInInspector]
+    public bool canShoot = true;
+
     private Rigidbody rb;
     private Transform _transform;
     private GameManager gameManager;

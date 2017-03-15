@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
         {
             scoreUI.UpdateScore(score);
             scoreUI.Appear();
+            player.canShoot = false;
         }
     }
 

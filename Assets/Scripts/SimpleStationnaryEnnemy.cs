@@ -12,7 +12,7 @@ public class SimpleStationnaryEnnemy : Entity {
 	
 	void Update ()
     {
-        if(player != null)
+        if (player != null && shot != null)
         {
             if (transform.position.z - player.transform.position.z <= weaponRange && Time.time > nextFire)
             {

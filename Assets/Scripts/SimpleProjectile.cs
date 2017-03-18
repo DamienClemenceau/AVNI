@@ -22,8 +22,9 @@ public class SimpleProjectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag != "Boundary" && creator != other.gameObject) { 
-            if (targetMask == (targetMask | 1<<other.gameObject.layer))
+        if(other.tag != "Boundary" && creator != other.gameObject)
+        {
+            if ((targetMask & (1 << other.gameObject.layer)) > 0)
             {
                 Entity entity = other.GetComponent<Entity>();
                 entity.TakeDamage();

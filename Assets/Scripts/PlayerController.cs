@@ -126,7 +126,6 @@ public class PlayerController : Entity
             Mathf.Clamp(rb.position.y, boundary.yMin, boundary.yMax),
             rb.position.z
         );
-        rb.rotation = Quaternion.Euler(0f, 0f, rb.velocity.x * -tilt);
 	}
 
     public void AddMana(int mana)

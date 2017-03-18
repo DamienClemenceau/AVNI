@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public int life = 1;
+    protected float maxLife = 1;
+    public float life = 1;
     public int scoreValue;
     protected GameManager gameManager;
+
+    void Awake()
+    {
+        maxLife = life;
+    }
 
     void Start()
     {

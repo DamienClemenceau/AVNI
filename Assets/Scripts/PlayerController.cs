@@ -12,6 +12,8 @@ public class Speed
     public float lateral, foward;
 }
 
+public delegate void PlayerAction();
+
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : Entity
 {
@@ -40,6 +42,9 @@ public class PlayerController : Entity
     private float currentVelocity;
     private float nextFire;
 
+    public Texture2D damageTexture;
+    public GameObject shieldEffect;
+
     [HideInInspector]
     public float direction;
 
@@ -49,6 +54,9 @@ public class PlayerController : Entity
 	public AudioClip rage;
 
 	private AudioSource[] sounds;
+    private GameObject shieldObject;
+
+    public static event PlayerAction OnTakeDamage;
 
     void Start()
     {
@@ -68,12 +76,22 @@ public class PlayerController : Entity
         */
     }
 
+    void OnGUI()
+    {
+        GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, Mathf.Abs(life / maxLife - 1));
+        GUI.depth = -10;
+        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), damageTexture);
+    }
+
     void Update()
     {
         if (Input.GetButton("Fire2") && mana >= manaShieldConsuption)
         {
             if(!shielded)
+            {
                 mana -= manaShieldConsuption;
+                shieldObject = Instantiate(shieldEffect, shotSpawn.position, Quaternion.identity, transform);
+            }
             shielded = true;
             /*
 			sounds [1].clip = rage;
@@ -83,8 +101,9 @@ public class PlayerController : Entity
         else if(!Input.GetButton("Fire2") && shielded)
         {
             shielded = false;
+            Destroy(shieldObject);
         }
-        else if(Input.GetButton("Fire1") && Time.time > nextFire)
+        else if(Input.GetButton("Fire1") && Time.time > nextFire && !shielded)
         {
             nextFire = Time.time + fireRate;
 
@@ -119,6 +138,12 @@ public class PlayerController : Entity
 			sounds [1].Play ();
             */
             life--;
+
+            if(OnTakeDamage != null)
+            {
+                OnTakeDamage();
+            }
+
 
             if (life <= 0)
             {

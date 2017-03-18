@@ -44,6 +44,13 @@ public class PlayerController : Entity
     [HideInInspector]
     public float direction;
 
+	public AudioClip hit;
+	public AudioClip shoot;
+	public AudioClip fly;
+	public AudioClip rage;
+
+	private AudioSource[] sounds;
+
     void Start()
     {
         GameObject gameManagerObject = GameObject.FindWithTag("GameManager");
@@ -54,6 +61,11 @@ public class PlayerController : Entity
         rb = GetComponent<Rigidbody>();
         _transform = GetComponent<Transform>();
         mana = maxMana;
+
+		sounds = GetComponents<AudioSource> ();
+		sounds [0].clip = fly;
+		sounds [0].loop = true;
+		sounds [0].Play ();
     }
 
     void Update()
@@ -63,6 +75,8 @@ public class PlayerController : Entity
             if(!shielded)
                 mana -= manaShieldConsuption;
             shielded = true;
+			sounds [1].clip = rage;
+			sounds [1].Play ();
         }
         else if(!Input.GetButton("Fire2") && shielded)
         {
@@ -81,6 +95,8 @@ public class PlayerController : Entity
                 projectile.GetComponent<SimpleProjectile>().creator = gameObject;
 
                 Debug.DrawRay(ray.origin, hit.point, Color.blue, 1.0f);
+				sounds [1].clip = shoot;
+				sounds [1].Play ();
             }
         }
 
@@ -94,7 +110,11 @@ public class PlayerController : Entity
     {
         if(!shielded)
         { 
+			
+			sounds [1].clip = hit;
+			sounds [1].Play ();
             life--;
+
             if (life <= 0)
             {
                 gameManager.GameOver();

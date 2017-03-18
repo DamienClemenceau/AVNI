@@ -1,26 +1,20 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
-    private int score;
+    public ScoreInfo score;
     private bool gameOver, levelFinished;
     private float timerTransition;
     private float timeTillTransition = 5;
-
-    public GameObject gameOverUI;
+    
     public ScoreUI scoreUI;
     public PlayerController player;
 
     void Update()
     {
-        if (gameOver)
-        {
-            gameOverUI.SetActive(true);
-        }
         if(levelFinished)
         {
-            scoreUI.UpdateScore(score);
+            scoreUI.UpdateScoreScreen(score);
             scoreUI.Appear();
             player.canShoot = false;
 
@@ -35,18 +29,20 @@ public class GameManager : MonoBehaviour {
     {
         float time = GetComponent<Fading>().BeginFade(1);
         yield return new WaitForSeconds(time);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        LevelManager.GetInstance().NextScene();
     }
 
     public void AddScore(int score)
     {
-        this.score += score;
+        this.score.score += score;
         player.AddMana(score);
     }
 
-    public void GameOver()
+    public IEnumerator GameOver()
     {
-        gameOver = true;
+        float time = GetComponent<Fading>().BeginFade(1);
+        yield return new WaitForSeconds(time);
+        LevelManager.GetInstance().GameOver();
     }
 
     public void LevelFinish()

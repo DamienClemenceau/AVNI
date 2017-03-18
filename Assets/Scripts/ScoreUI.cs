@@ -1,33 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+[System.Serializable]
+public struct ScoreInfo
+{
+    public float score;
+    public float hitTaken;
+    public float ennemyDestroyed, ennemyTotal;
+    public string sceneTitle;
+    public string sceneSubtitle;
+}
 
 public class ScoreUI : MonoBehaviour {
-    public GUIText scoreUI;
-    private float progress;
-    private Vector3 startPosition;
+    public Text scoreUI;
+    public Text hitTakenUI;
+    public Text ennemyDestroyUI;
+    public Text sceneTitle;
+    public Text sceneNumber;
 
-    void Start()
+    public void UpdateScoreScreen(ScoreInfo score)
     {
-        startPosition = transform.position = Vector3.left * 4;
-    }
-
-    public void UpdateScore(int score)
-    {
-        scoreUI.text = score.ToString();
+        scoreUI.text = score.score.ToString();
+        hitTakenUI.text = score.hitTaken.ToString();
+        ennemyDestroyUI.text = score.ennemyDestroyed.ToString() + "/" + score.ennemyTotal.ToString();
+        sceneTitle.text = score.sceneTitle;
+        sceneNumber.text = score.sceneSubtitle;
     }
 
     public void Appear()
     {
-        transform.position = new Vector3(
-            Mathf.Lerp(startPosition.x, 0, progress),
-            transform.position.y,
-            transform.position.z
-        );
-
-        if(progress <= 1)
-        {
-            progress += 0.08f;
-        }
+        gameObject.SetActive(true);
     }
 }

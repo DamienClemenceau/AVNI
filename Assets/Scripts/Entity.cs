@@ -28,6 +28,7 @@ public class Entity : MonoBehaviour
         if(life <= 0)
         {
             Destroy(gameObject);
+            gameManager.score.ennemyDestroyed++;
             gameManager.AddScore(scoreValue);
         }
     }

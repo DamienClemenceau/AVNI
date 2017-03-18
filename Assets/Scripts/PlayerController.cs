@@ -109,7 +109,7 @@ public class PlayerController : Entity
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, weaponRange, mask))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
             {
                 GameObject projectile = Instantiate(shot, shotSpawn.position, Quaternion.identity, _transform);
                 projectile.transform.LookAt(hit.point);
@@ -122,11 +122,6 @@ public class PlayerController : Entity
                 */
             }
         }
-
-        if(life <= 0)
-        {
-            gameManager.GameOver();
-        }
     }
 
     public override void TakeDamage()
@@ -138,8 +133,8 @@ public class PlayerController : Entity
 			sounds [1].Play ();
             */
             life--;
-
-            if(OnTakeDamage != null)
+            gameManager.score.hitTaken++;
+            if (OnTakeDamage != null)
             {
                 OnTakeDamage();
             }
@@ -147,8 +142,7 @@ public class PlayerController : Entity
 
             if (life <= 0)
             {
-                gameManager.GameOver();
-                Destroy(gameObject);
+                StartCoroutine(gameManager.GameOver());
             }
         }
     }
@@ -176,7 +170,9 @@ public class PlayerController : Entity
             Mathf.Clamp(rb.position.y, boundary.yMin, boundary.yMax),
             rb.position.z
         );
-	}
+
+        rb.rotation = Quaternion.Euler(60, rb.rotation.y, rb.velocity.x * -tilt);
+    }
 
     public void AddMana(int mana)
     {

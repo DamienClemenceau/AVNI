@@ -6,7 +6,7 @@ public class Entity : MonoBehaviour
 {
     public int life = 1;
     public int scoreValue;
-    private GameManager gameManager;
+    protected GameManager gameManager;
 
     void Start()
     {

@@ -9,7 +9,7 @@ public class ScoreUI : MonoBehaviour {
 
     void Start()
     {
-        startPosition = transform.position = Vector3.left * 3;
+        startPosition = transform.position = Vector3.left * 4;
     }
 
     public void UpdateScore(int score)

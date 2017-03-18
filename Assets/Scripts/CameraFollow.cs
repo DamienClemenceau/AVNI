@@ -7,7 +7,8 @@ public class CameraFollow : MonoBehaviour {
     private Transform _transform;
     private float offset;
     private PlayerController playerController;
-	void Start ()
+
+    void Start ()
     {
         _transform = GetComponent<Transform>();
         if (follow != null)
@@ -29,4 +30,6 @@ public class CameraFollow : MonoBehaviour {
             );
         }
 	}
+
+
 }

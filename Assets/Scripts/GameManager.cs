@@ -1,10 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     private int score;
     private bool gameOver, levelFinished;
+    private float timerTransition;
+    private float timeTillTransition = 5;
 
     public GameObject gameOverUI;
     public ScoreUI scoreUI;
@@ -21,7 +23,19 @@ public class GameManager : MonoBehaviour {
             scoreUI.UpdateScore(score);
             scoreUI.Appear();
             player.canShoot = false;
+
+            if (timeTillTransition + timerTransition <= Time.time)
+            {
+                StartCoroutine(NextScene());
+            }
         }
+    }
+
+    IEnumerator NextScene()
+    {
+        float time = GetComponent<Fading>().BeginFade(1);
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void AddScore(int score)
@@ -38,5 +52,6 @@ public class GameManager : MonoBehaviour {
     public void LevelFinish()
     {
         levelFinished = true;
+        timerTransition = Time.time;
     }
 }

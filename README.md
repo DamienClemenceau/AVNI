@@ -1,7 +1,7 @@
-#### Golden Gate
-### Projet Web pour le MASTER MAJE
+# Golden Gate
+## Projet Web pour le MASTER MAJE
 
-## Instalation du projet
+### Instalation du projet
 
 > Projet réalisé sous unity
 
@@ -16,7 +16,7 @@ Sous unity :
 - Cliquer sur 'Open'
 - Selectionner le dossier où le projet se trouve
 
-## Build
+### Build
 
  > Necessite d'installer le plugin WebGL d'Unity
  
@@ -27,7 +27,7 @@ Sous unity :
  > Attention : Cela peut prendre plusieur minute selon les PC
  > Attention : Chrome peut bloquer le plugin Unity WebGL 
  
- ## Colaborateur
+ ### Colaborateur
  
  - Mikael Harnois - Game Design/Level Design
  - Maxime Court - Level Designer

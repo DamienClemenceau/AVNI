@@ -9,7 +9,7 @@ public class SimpleStationnaryEnnemy : Entity {
     public float fireRate;
     public float weaponRange;
     private float nextFire;
-	
+
 	void Update ()
     {
         if (player != null && shot != null)

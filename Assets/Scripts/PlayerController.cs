@@ -108,6 +108,9 @@ public class PlayerController : Entity
             nextFire = Time.time + fireRate;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Vector3 origin = ray.origin;
+            origin.z = transform.position.z;
+            ray.origin = origin;
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
             {

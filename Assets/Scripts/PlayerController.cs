@@ -55,6 +55,8 @@ public class PlayerController : Entity
 
 	private AudioSource[] sounds;
     private GameObject shieldObject;
+    private float downTime;
+    private float shieldTime = 2;
 
     public static event PlayerAction OnTakeDamage;
 
@@ -91,14 +93,21 @@ public class PlayerController : Entity
             {
                 mana -= manaShieldConsuption;
                 shieldObject = Instantiate(shieldEffect, shotSpawn.position, Quaternion.identity, transform);
+                downTime = Time.time  + shieldTime;
             }
             shielded = true;
+            Debug.Log((!Input.GetButton("Fire2") && shielded) || (Time.time > downTime && shielded));
             /*
 			sounds [1].clip = rage;
 			sounds [1].Play ();
             */
+            if(Time.time > downTime)
+            {
+                shielded = false;
+                Destroy(shieldObject);
+            }
         }
-        else if(!Input.GetButton("Fire2") && shielded)
+        else if((!Input.GetButton("Fire2") && shielded))
         {
             shielded = false;
             Destroy(shieldObject);

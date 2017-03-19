@@ -12,24 +12,24 @@ public class Entity : MonoBehaviour
     void Awake()
     {
         maxLife = life;
-    }
-
-    void Start()
-    {
         GameObject gameManagerObject = GameObject.FindWithTag("GameManager");
         if (gameManagerObject != null)
         {
             gameManager = gameManagerObject.GetComponent<GameManager>();
         }
     }
+
     public virtual void TakeDamage()
     {
         life--;
         if(life <= 0)
         {
+            if(gameManager != null)
+            {
+                gameManager.score.ennemyDestroyed += 1;
+                gameManager.AddScore(scoreValue);
+            }
             Destroy(gameObject);
-            gameManager.score.ennemyDestroyed++;
-            gameManager.AddScore(scoreValue);
         }
     }
 }

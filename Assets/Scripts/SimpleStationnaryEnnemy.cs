@@ -10,6 +10,14 @@ public class SimpleStationnaryEnnemy : Entity {
     public float weaponRange;
     private float nextFire;
 
+    void Start()
+    {
+        if(player == null)
+        {
+            player = GameObject.FindWithTag("Demon");
+        }
+    }
+
 	void Update ()
     {
         if (player != null && shot != null)

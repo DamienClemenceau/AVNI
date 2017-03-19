@@ -62,11 +62,6 @@ public class PlayerController : Entity
 
     void Start()
     {
-        GameObject gameManagerObject = GameObject.FindWithTag("GameManager");
-        if (gameManagerObject != null)
-        {
-            gameManager = gameManagerObject.GetComponent<GameManager>();
-        }
         rb = GetComponent<Rigidbody>();
         _transform = GetComponent<Transform>();
         mana = maxMana;

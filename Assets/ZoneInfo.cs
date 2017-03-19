@@ -27,7 +27,7 @@ public class ZoneInfo : MonoBehaviour {
 
         up.anchoredPosition = Vector2.up * Mathf.Lerp(40, -40, progress);
         down.anchoredPosition = Vector2.down * Mathf.Lerp(40, -40, progress);
-        textPosition.anchoredPosition = new Vector2(Mathf.Lerp(500 * -dir, 0, progress), 45);
+        textPosition.anchoredPosition = new Vector2(Mathf.Lerp(1000 * -dir, 0, progress), 45);
 
         if(timeToEnd < Time.time && dir == 1)
         {

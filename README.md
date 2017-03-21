@@ -1,4 +1,4 @@
-# Golden Gate
+# Golden-Gate
 ## Projet Web pour le MASTER MAJE
 
 ### Instalation du projet
@@ -8,7 +8,7 @@
 Cloner le projet :
 
 ```
-git clone https://github.com/DamienClemenceau/AVNI.git
+git clone https://github.com/DamienClemenceau/Golden-Gate.git
 ```
 
 Sous unity : 
@@ -24,7 +24,7 @@ Sous unity :
  - Selectionner la plateforme WebGL
  - Cliquer sur 'build'
  
- > Attention : Cela peut prendre plusieur minute selon les PC
+ > Attention : Cela peut prendre plusieurs minute selon les PC
  > Attention : Chrome peut bloquer le plugin Unity WebGL 
  
  ### Colaborateur

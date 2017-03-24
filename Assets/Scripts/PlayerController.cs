@@ -65,12 +65,12 @@ public class PlayerController : Entity
         rb = GetComponent<Rigidbody>();
         _transform = GetComponent<Transform>();
         mana = maxMana;
-        /*
+        
 		sounds = GetComponents<AudioSource> ();
 		sounds [0].clip = fly;
 		sounds [0].loop = true;
 		sounds [0].Play ();
-        */
+        
     }
 
     void OnGUI()
@@ -92,10 +92,10 @@ public class PlayerController : Entity
             }
             shielded = true;
             Debug.Log((!Input.GetButton("Fire2") && shielded) || (Time.time > downTime && shielded));
-            /*
+            
 			sounds [1].clip = rage;
 			sounds [1].Play ();
-            */
+            
             if(Time.time > downTime)
             {
                 shielded = false;
@@ -123,10 +123,10 @@ public class PlayerController : Entity
                 projectile.GetComponent<SimpleProjectile>().creator = gameObject;
 
                 Debug.DrawRay(ray.origin, hit.point, Color.blue, 1.0f);
-                /*
+                
                 sounds [1].clip = shoot;
 				sounds [1].Play ();
-                */
+                
             }
         }
     }
@@ -135,10 +135,10 @@ public class PlayerController : Entity
     {
         if(!shielded)
         { 
-			/*
+			
 			sounds [1].clip = hit;
 			sounds [1].Play ();
-            */
+            
             life--;
             gameManager.score.hitTaken++;
             if (OnTakeDamage != null)
